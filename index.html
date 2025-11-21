@@ -1,20 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>kemvagyok</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sági Benedek – Portfólió</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <ul>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Portfolio</a></li>
-        <li><a href="#">Blog</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-</body>
+    <header class="hero">
+        <h1>Sági Benedek</h1>
+        <p>AI fejlesztő · Mobil- és backend fejlesztő</p>
+        <a href="https://www.linkedin.com/in/benedek-s-832858108/" class="btn">Linkedln</a>
+    </header>
+
+    <section id="about" class="section">
+        <h2>Rólam</h2>
+        <p class="aboutMe">
+25 éves MSc hallgató vagyok a BME-VIK-en, mesterséges intelligencia és adattudomány szakirányon. Fejlesztőként elsősorban a modern AI-modellek, a mélytanulás, valamint a mobilalkalmazás fejlesztése is érdekel.
+
+Hallássérültként a kommunikációban elsősorban az írásra támaszkodom, ami nem akadály, hanem előny: precízen, koncentráltan és egyértelműen dolgozom együtt másokkal. A csapatmunkában gyorsan alkalmazkodom, és a technológiai háttértudásommal aktívan hozzájárulok a közös sikerekhez.
+
+Célom, hogy olyan AI-megoldásokat hozzak létre, amelyek valódi értéket teremtenek – legyen szó kutatásról, fejlesztésről vagy innovatív alkalmazások megvalósításáról.
+        </p>
+    </section>
+
+    <section id="projects" class="section">
+        <h2>Projektek</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3>Azure alapú beszéd→szöveg platform</h3>
+                <p>
+                    Egy Teams-szerű valós idejű feliratozó rendszer, amely bárhol használható.
+                </p>
+            </div>
+            <div class="project-card">
+                <h3>GNN modellek és magyarázhatóság</h3>
+                <p>
+                    GNNExplainer és PGExplainer implementálása PyTorch Geometric környezetben.
+                </p>
+            </div>
+            <div class="project-card">
+                <h3>Mobilfejlesztés Kotlinban</h3>
+                <p>
+                    Android-alapú alkalmazások fejlesztése modern architektúrákkal.
+                </p>
+            </div>
+			<div class="project-card">
+                <h3>Osztályozás e-mail tartalmain</h3>
+                <p>
+A projekt célja, hogy a három különböző szolgáltatást (a levélküldő/e-mail kliens (vagy `ügyfél`), a forgalomirányító és a webszerver (amely az OpenAI API-n keresztül küld kérést), később pedig egy saját fejlesztésű modell is) saját konténerben futtassa.                </p>
+            </div>
+            <div class="project-card">
+                <h3>DXC Technology – Chatbot & Speech AI</h3>
+                <p>
+                    11 hónap munkatapasztalat: Teams chatbotok és speech integration.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="section">
+        <h2>Készségek</h2>
+        <ul class="skills-list">
+            <li>AI & Deep Learning (TensorFlow, Keras, PyTorch, PyG)</li>
+            <li>GNN modellek és magyarázhatóság</li>
+            <li>Backend: ASP.NET Core, Flask, Django</li>
+            <li>Mobilfejlesztés: Kotlin Android</li>
+            <li>Adattudomány és adatvizualizáció</li>
+            <li>Docker, Git, CI/CD</li>
+			<li>Lineáris algebra, valószínűségi eloszlások, kalkulus</li>
+        </ul>
+    </section>
+
+    <section id="contact" class="section">
+        <h2>Kapcsolat</h2>
+        <p>Elsősorban írásban kommunikálok, emailen:</p>
+        <a class="email-link" href="mailto:0322sagibenedek@gmail.com">0322sagibenedek@gmail.com</a>
+		<pa >
+    </section>
+
+    <footer>
+        <p>© 2025 Sági Benedek</p>
+    </footer>
 
     <script src="script.js"></script>
-
+</body>
 </html>
