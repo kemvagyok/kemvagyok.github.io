@@ -16,84 +16,115 @@ body {
 .hero {
     background: linear-gradient(135deg, #4b6cb7, #182848);
     color: white;
-    padding: 80px 20px;
+    padding: 120px 20px;
     text-align: center;
 }
+
 .hero h1 {
-    font-size: 3rem;
-    margin-bottom: 10px;
+    font-size: 3.5rem;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
 }
+
 .hero p {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
+    font-size: 1.3rem;
+    opacity: 0.9;
+    margin-bottom: 30px;
 }
+
 .hero .btn {
-    display: inline-block;
-    background: #ffffff;
+    background: white;
     color: #182848;
-    padding: 10px 20px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: 0.3s;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-size: 1.1rem;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    transition: all 0.3s ease;
 }
+
 .hero .btn:hover {
-    opacity: 0.8;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
 }
 
 /* ===== Szekciók ===== */
 .section {
-    padding: 60px 20px;
-    max-width: 900px;
+    padding: 80px 20px;
+    max-width: 1000px;
     margin: auto;
 }
+
 .section h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 40px;
+    position: relative;
 }
+
+.section h2::after {
+    content: "";
+    width: 60px;
+    height: 4px;
+    background: #4b6cb7;
+    display: block;
+    margin: 12px auto 0;
+    border-radius: 2px;
+}
+
 .section p, .section li {
     font-size: 1.1rem;
 }
 
 .aboutMe {
-	text-align: center;
+    max-width: 750px;
+    margin: auto;
+    text-align: center;
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #333;
 }
 
 /* ===== Projektek ===== */
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-}
 .project-card {
     background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.project-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #4b6cb7, #182848);
+    opacity: 0;
+    z-index: -1;
     transition: 0.3s;
 }
+
 .project-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 18px rgba(0,0,0,0.15);
+    transform: translateY(-6px);
+    color: white;
 }
+
+.project-card:hover::before {
+    opacity: 1;
+}
+
 .project-card h3 {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 /* ===== Készségek ===== */
-.skills-list {
-    list-style: none;
-    padding-left: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 10px;
-}
 .skills-list li {
-    background: #fff;
-    padding: 12px 16px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.skills-list li:hover {
+    transform: translateX(5px);
 }
 
 /* ===== Kapcsolat ===== */
@@ -111,9 +142,8 @@ body {
 
 /* ===== Footer ===== */
 footer {
-    text-align: center;
-    padding: 20px;
-    background: #182848;
-    color: white;
-    margin-top: 40px;
+    background: linear-gradient(135deg, #182848, #0f172a);
+    color: #ddd;
+    font-size: 0.95rem;
 }
+
