@@ -1,91 +1,751 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sági Benedek – Portfólió</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --fg: #f0f0f0;
+            --accent: #00ff41;
+            --accent2: #ff0080;
+            --border: #333;
+            --shadow: rgba(0, 255, 65, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg);
+            color: var(--fg);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom cursor */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-follower {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.3s ease;
+            opacity: 0.5;
+        }
+
+        /* Grain overlay */
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.03;
+            z-index: 1000;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        /* Hero section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(135deg, transparent 0%, rgba(0, 255, 65, 0.05) 50%, transparent 100%),
+                repeating-linear-gradient(0deg, rgba(0, 255, 65, 0.03) 0px, transparent 1px, transparent 2px, rgba(0, 255, 65, 0.03) 3px);
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            0%, 100% { transform: translateY(-10%); }
+            50% { transform: translateY(10%); }
+        }
+
+        .glitch {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 800;
+            text-transform: uppercase;
+            position: relative;
+            color: var(--fg);
+            letter-spacing: -0.02em;
+            animation: glitch-main 3s infinite;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch::before {
+            animation: glitch-before 2s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+            color: var(--accent);
+        }
+
+        .glitch::after {
+            animation: glitch-after 2.5s infinite;
+            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+            color: var(--accent2);
+        }
+
+        @keyframes glitch-main {
+            0%, 90%, 100% { transform: translate(0); }
+            91% { transform: translate(-2px, 2px); }
+            93% { transform: translate(2px, -2px); }
+            95% { transform: translate(-2px, -2px); }
+        }
+
+        @keyframes glitch-before {
+            0%, 90%, 100% { transform: translate(0); }
+            91% { transform: translate(2px, -2px); }
+            93% { transform: translate(-3px, 2px); }
+        }
+
+        @keyframes glitch-after {
+            0%, 90%, 100% { transform: translate(0); }
+            91% { transform: translate(-2px, 2px); }
+            93% { transform: translate(3px, -3px); }
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            margin-top: 2rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.5s;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+
+        .cta-buttons {
+            margin-top: 3rem;
+            display: flex;
+            gap: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 1s;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border: 2px solid var(--accent);
+            background: transparent;
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            text-transform: uppercase;
+            cursor: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn:hover {
+            color: var(--bg);
+            box-shadow: 0 0 20px var(--shadow);
+        }
+
+        .btn:hover::before {
+            left: 0;
+        }
+
+        /* Sections */
+        section {
+            min-height: 100vh;
+            padding: 8rem 5%;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 800;
+            margin-bottom: 4rem;
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 0;
+            height: 4px;
+            background: var(--accent);
+            transition: width 0.6s ease;
+        }
+
+        .section-title.visible::after {
+            width: 100%;
+        }
+
+        /* About section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1400px;
+        }
+
+        .about-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+
+        .about-text.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease;
+        }
+
+        .skills-grid.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .skill-item {
+            padding: 1.5rem;
+            border: 2px solid var(--border);
+            background: rgba(0, 255, 65, 0.02);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .skill-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .skill-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+
+        .skill-item:hover::before {
+            left: 100%;
+        }
+
+        .skill-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Projects section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            max-width: 1600px;
+        }
+
+        .project-card {
+            border: 2px solid var(--border);
+            padding: 2rem;
+            position: relative;
+            background: rgba(255, 255, 255, 0.02);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .project-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--accent), var(--accent2), var(--accent));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-number {
+            font-family: 'Syne', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent);
+            opacity: 0.3;
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--fg);
+        }
+
+        .project-desc {
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: rgba(240, 240, 240, 0.7);
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            padding: 0.3rem 0.8rem;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        /* Contact section */
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-text {
+            font-size: 1.5rem;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .contact-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease 0.2s;
+        }
+
+        .contact-links.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-link {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .contact-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .contact-link:hover::after {
+            width: 100%;
+        }
+
+        /* Terminal effect */
+        .terminal {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            background: rgba(10, 10, 10, 0.95);
+            border: 2px solid var(--accent);
+            padding: 1rem;
+            font-size: 0.85rem;
+            z-index: 100;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 2s;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .terminal-header {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .terminal-content {
+            color: var(--fg);
+            line-height: 1.6;
+        }
+
+        .blink {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .terminal {
+                display: none;
+            }
+
+            body {
+                cursor: auto;
+            }
+
+            .cursor, .cursor-follower {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header class="hero">
-        <h1>Sági Benedek</h1>
-        <p>Python, AI fejlesztő · Mobil- és backend fejlesztő</p>
-        <a href="https://www.linkedin.com/in/benedek-s-832858108/" class="btn">Linkedln</a>
-        <br><br>
-        <a href="https://github.com/kemvagyok" class="btn">GitHub</a>
-    </header>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    <div class="grain"></div>
 
-    <section id="about" class="section">
-        <h2>Rólam</h2>
-        <p class="aboutMe">
-25 éves MSc hallgató vagyok a BME-VIK-en, mesterséges intelligencia és adattudomány szakirányon. Fejlesztőként elsősorban a modern AI-modellek és a mélytanulás érdekelnek, emellett mobilalkalmazások fejlesztésével is foglalkozom.
+    <div class="terminal">
+        <div class="terminal-header">
+            <span>system.log</span>
+            <span>█</span>
+        </div>
+        <div class="terminal-content">
+            <div>> initializing portfolio...</div>
+            <div>> loading modules...</div>
+            <div>> status: <span style="color: var(--accent);">ONLINE</span></div>
+            <div>> visitor detected<span class="blink">_</span></div>
+        </div>
+    </div>
 
-Hallássérültként a kommunikációban elsősorban az írásra támaszkodom, ami számomra nem akadály, hanem előny: precízen, koncentráltan és egyértelműen működöm együtt másokkal. A csapatmunkában gyorsan alkalmazkodom, és technológiai háttértudásommal aktívan hozzájárulok a közös sikerekhez.
-
-Szabadidőmben erősen érdeklődöm a számítógépes grafika és a 3D modellezés iránt is, különösen a Blender és a Unity eszköztárán keresztül.
-        </p>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 class="glitch" data-text="DEVELOPER">DEVELOPER</h1>
+        <p class="subtitle">CS Engineer • AI Specialist • Mobil developer</p>
+        <div class="cta-buttons">
+            <a href="#projects" class="btn">View Projects</a>
+            <a href="#contact" class="btn">Get In Touch</a>
+        </div>
     </section>
 
-    <section id="projects" class="section">
-        <h2>Projektek</h2>
-        <div class="projects-grid">
-            <div class="project-card">
-                <h3>Azure alapú beszéd</h3>
-                <p>
-                    Egy Teams-szerű valós idejű feliratozó rendszer, amely böngészőben (ASP.NET Core) használható böngésző.
-                </p>
+    <!-- About Section -->
+    <section id="about">
+        <h2 class="section-title">About_</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>I'm a computer science engineer and AI specialist with a passion for building intelligent systems and scalable applications. With expertise spanning machine learning, deep learning, and full-stack development, I transform complex problems into elegant solutions.</p>
+                <br>
+                <p>My work focuses on creating AI-powered applications that push the boundaries of what's possible, while maintaining clean, maintainable code and exceptional user experiences.</p>
             </div>
-            <div class="project-card">
-                <h3>GNN modellek és magyarázhatóság</h3>
-                <p>
-                    GNNExplainer és PGExplainer implementálása PyTorch Geometric környezetben.
-                </p>
-            </div>
-            <div class="project-card">
-                <h3>Mobilfejlesztés Kotlinban</h3>
-                <p>
-                    Android-alapú alkalmazások fejlesztése modern architektúrákkal.
-                </p>
-            </div>
-			<div class="project-card">
-                <h3>Osztályozás e-mail tartalmain</h3>
-                <p>
-A projekt célja, hogy a három különböző szolgáltatást (a levélküldő/e-mail kliens (vagy `ügyfél`), a forgalomirányító és a webszerver (amely az OpenAI API-n keresztül küld kérést), később pedig egy saját fejlesztésű modell is) saját konténerben futtassa.                </p>
-            </div>
-            <div class="project-card">
-                <h3>DXC Technology – Chatbot & Speech AI</h3>
-                <p>
-                    11 hónap munkatapasztalat: Teams chatbotok és speech integration.
-                </p>
+            <div class="skills-grid">
+
+                <div class="skill-item">
+                    <div class="skill-name">AI & ML</div>
+                    <div>PyTorch, TensorFlow, Scikit-learn, Computer Vision</div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-name">Backend</div>
+                    <div>Python, Kotlin </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-name">Frontend</div>
+                    <div>React</div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-name">DevOps</div>
+                    <div>Docker, Kubernetes, CI/CD</div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-name">Maths</div>
+                    <div>Linear Algebra, Calculus, Probability</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="skills" class="section">
-        <h2>Készségek</h2>
-        <ul class="skills-list">
-            <li>AI & Deep Learning (TensorFlow-Keras, PyTorch, PyG)</li>
-            <li>GNN modellek és magyarázhatóság</li>
-            <li>Backend: ASP.NET Core, Flask, Django</li>
-            <li>Mobilfejlesztés: Kotlin Android</li>
-            <li>Adattudomány és adatvizualizáció</li>
-            <li>Docker, Git, CI/CD</li>
-			<li>Lineáris algebra, valószínűségi eloszlások, kalkulus</li>
-            <li>Programozási nyelvek: Python, Kotlin, C#</li>
-            <li>SQL</li>
-        </ul>
+    <!-- Projects Section -->
+    <section id="projects">
+        <h2 class="section-title">Projects_</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-number">01</div>
+                <h3 class="project-title">Ankle Align detection</h3>
+                <p class="project-desc">Real-time artistic style transfer using deep convolutional neural networks. Optimized inference pipeline achieving 60fps on consumer hardware.</p>
+                <div class="project-tags">
+                    <span class="tag">Tensorflow, Docker</span>
+                    <span class="tag">Computer Vision</span>
+                    <span class="tag">CUDA</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-number">02</div>
+                <h3 class="project-title">Paint app</h3>
+                <p class="project-desc">Scalable platform for training large language models across GPU clusters. Implements gradient accumulation and model parallelism.</p>
+                <div class="project-tags">
+                    <span class="tag">Kotlin</span>
+                    <span class="tag">Android</span>
+                    <span class="tag">Jetpack Compose</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-number">03</div>
+                <h3 class="project-title">Email Classification</h3>
+                <p class="project-desc">An example of how we can use Docker and the ChatGPT API (plus, a simple, custom model will be included).</p>
+                <div class="project-tags">
+                    <span class="tag">Flask</span>
+                    <span class="tag">OpenAI API</span>
+                    <span class="tag">Docker</span>
+                </div>
+            </div>
+
     </section>
 
-    <section id="contact" class="section">
-        <h2>Kapcsolat</h2>
-        <p>Elsősorban írásban kommunikálok, emailen:</p>
-        <a class="email-link" href="mailto:0322sagibenedek@gmail.com">0322sagibenedek@gmail.com</a>
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 class="section-title">Contact_</h2>
+        <div class="contact-container">
+            <p class="contact-text">
+                Let's build something extraordinary together. Whether you have a project in mind or just want to connect, I'm always open to discussing new opportunities and collaborations.
+            </p>
+            <div class="contact-links">
+                <a href="mailto:kemvagyokdeveloper@gmail.com" class="contact-link">Email</a>
+                <a href="https://github.com/kemvagyok" class="contact-link">GitHub</a>
+                <a href="https://linkedin.com/in/benedek-s-832858108" class="contact-link">LinkedIn</a>
+            </div>
+        </div>
     </section>
 
-<footer>
-    <p>© <span id="year"></span> Sági Benedek · Python, AI & Software Developer</p>
-</footer>
+    <script>
+        // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+        
+        let mouseX = 0;
+        let mouseY = 0;
+        let followerX = 0;
+        let followerY = 0;
 
-    <script src="script.js"></script>
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+        });
+
+        function animateFollower() {
+            const dx = mouseX - followerX;
+            const dy = mouseY - followerY;
+            
+            followerX += dx * 0.1;
+            followerY += dy * 0.1;
+            
+            cursorFollower.style.left = followerX + 'px';
+            cursorFollower.style.top = followerY + 'px';
+            
+            requestAnimationFrame(animateFollower);
+        }
+        animateFollower();
+
+        // Hover effect on buttons and links
+        const interactives = document.querySelectorAll('.btn, .contact-link, .project-card');
+        interactives.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(1.5)';
+                cursorFollower.style.transform = 'scale(1.5)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                cursorFollower.style.transform = 'scale(1)';
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements
+        document.querySelectorAll('.section-title, .about-text, .skills-grid, .project-card, .contact-text, .contact-links').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Parallax effect on hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+                hero.style.opacity = 1 - (scrolled / window.innerHeight);
+            }
+        });
+    </script>
 </body>
 </html>
